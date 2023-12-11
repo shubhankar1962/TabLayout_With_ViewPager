@@ -3,17 +3,33 @@ package com.example.chatapppractice
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.recyclerview.widget.RecyclerView
+import com.example.chatapppractice.adapter.UserAdapter
 import com.example.chatapppractice.adapter.ViewPagerAdapter
 import com.example.chatapppractice.databinding.ActivityMainBinding
+import com.example.chatapppractice.users.User
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var userList : ArrayList<User>
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: UserAdapter
+    private lateinit var mauth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mauth = FirebaseAuth.getInstance()
+        userList = ArrayList()
+        adapter = UserAdapter(this,userList)
+
 
 
         binding.tabs.addTab(binding.tabs.newTab().setText("Chats"))
@@ -37,5 +53,20 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_items,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.logout)
+        {
+            mauth.signOut()
+            finish()
+            return true
+        }
+        return true
     }
 }
