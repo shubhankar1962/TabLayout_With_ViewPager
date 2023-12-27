@@ -59,4 +59,9 @@ dependencies {
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     // Add the dependencies for any other desired Firebase products
+
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+
+// Add the Gson converter for Retrofit (to convert JSON responses to Java/Kotlin objects)
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 }
